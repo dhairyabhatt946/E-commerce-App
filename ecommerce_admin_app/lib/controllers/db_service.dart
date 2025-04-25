@@ -21,4 +21,25 @@ class DbService {
   Future deleteCategories({required String docId}) async {
     await FirebaseFirestore.instance.collection("shop_categories").doc(docId).delete();
   }
+
+  //PRODUCTS
+  // read products from database
+  Stream<QuerySnapshot> readProducts() {
+    return FirebaseFirestore.instance.collection("shop_products").orderBy("category", descending: true).snapshots();
+  }
+
+  // create new product
+  Future createProduct({required Map<String, dynamic> data}) async {
+    await FirebaseFirestore.instance.collection("shop_products").add(data);
+  }
+
+  // update product
+  Future updateProduct({required String docId, required Map<String, dynamic> data}) async {
+    await FirebaseFirestore.instance.collection("shop_products").doc(docId).update(data);
+  }
+
+  // delete product
+  Future deleteProduct({required String docId}) async {
+    await FirebaseFirestore.instance.collection("shop_products").doc(docId).delete();
+  }
 }
